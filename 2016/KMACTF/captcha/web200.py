@@ -1,6 +1,5 @@
 import requests
 
-data = ""
 url = "http://42.112.213.91/web200/"
 cookie = {
     "PHPSESSID" : "qnerofea6gh62cr8e1dm5da3r1", #get cookie from browser =))
