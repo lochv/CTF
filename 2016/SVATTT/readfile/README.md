@@ -30,12 +30,18 @@ echo "</html>";
 ?>
 
 
-Vul at:         $realsig = substr(md5($filename.$timestamp.$secretkey),0,16);
-                  if ($sig == $realsig)
-
 I thought it 's hash length attack but $secretkey at the last canot modified.
 So, it isn't hash length attack.
-In php 0e123456 = 0*10^123456= 0, so if ($sig == $realsig) return true if $sig=0 and $realsig= 0exxxxxx with xxxxxx is decimal.
+
+Then I found https://www.owasp.org/images/6/6b/PHPMagicTricks-TypeJuggling.pdf
+
+=>> 
+Vul at:         $realsig = substr(md5($filename.$timestamp.$secretkey),0,16);          
+                    if ($sig == $realsig)
+
+$realsig = substr(md5($filename.$timestamp.$secretkey),0,16);
+So $realsig can be control.
+In loose (==)  of php: "0e123456" = 0*10^123456= "0", so if ($sig == $realsig) return true if $sig=0 and $realsig= 0exxxxxx with xxxxxx is decimal.
 So, payload = http://readfile.svattt.org:8888/web100.php?filename=flag.php&timestamp={fuzzing}&sig=0
 U can fuzz with burpsuite or ur coding skill :D
 
